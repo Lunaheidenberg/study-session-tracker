@@ -23,7 +23,9 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-
+          cache: "pip"
+          cache-dependencies-path: "requirement.txt"
+          
       - name: Install dependencies
         run: python -m pip install -r requirement.txt
 
