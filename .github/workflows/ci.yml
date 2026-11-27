@@ -31,3 +31,22 @@ jobs:
       - name: Build Docker image
         run: docker build -t study-session-tracker:ci .
       
+      - name: Login to GHCR
+      if: github.event_name == 'push'
+      uses: docker/login-action@v4
+      with:
+        registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tag and push Docker image
+        if: github.event_name == 'push'
+        run: |
+          IMAGE="ghcr.io/${GITHUB_REPOSITORY,,}"
+
+          docker tag study-session-tracker:ci "$IMAGE:$GITHUB_SHA"
+          docker tag study-session-tracker:ci "$IMAGE:latest"
+
+          docker push "$IMAGE:$GITHUB_SHA"
+          docker push "$IMAGE:latest"
+
