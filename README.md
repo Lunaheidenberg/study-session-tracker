@@ -87,3 +87,5 @@ docker compose down
 ```
 
 Avoid `docker compose down -v` if you want to keep stored data.
+
+i love lekhoi
